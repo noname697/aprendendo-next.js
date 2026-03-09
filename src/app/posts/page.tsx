@@ -1,5 +1,3 @@
-import Button from "@/components/button";
-
 interface DataProps {
   id: number;
   title: string;
@@ -17,7 +15,24 @@ const PostsPage = async () => {
   const response = await fetch("https://dummyjson.com/posts");
   const data: Response = await response.json();
 
-  console.log(data);
+  const handleFetchPosts = async () => {
+    "use server";
+    const response = await fetch("https://dummyjson.com/posts");
+    const data: Response = await response.json();
+
+    console.log(data.posts);
+  };
+
+  const handleSearchUsers = async (formData: FormData) => {
+    "use server";
+
+    const userId = formData.get("userId");
+
+    const response = await fetch(`https://dummyjson.com/posts/user/${userId}`);
+    const data: Response = await response.json();
+    
+    console.log(data);
+  };
 
   return (
     <div>
@@ -25,7 +40,19 @@ const PostsPage = async () => {
         Todos os posts
       </h1>
 
-      <Button />
+      <button onClick={handleFetchPosts}>Buscar Posts</button>
+
+      <form className="flex gap-2 my-4" action={handleSearchUsers}>
+        <input
+          type="text"
+          placeholder="ID do usuário"
+          className="border border-gray-200 p-2"
+          name="userId"
+        />
+        <button className="bg-blue-500 text-white p-2" type="submit">
+          Buscar usuário
+        </button>
+      </form>
 
       <div className="flex flex-col gap-4 mx-2">
         {data.posts.map((post) => (
