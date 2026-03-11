@@ -13,8 +13,14 @@ interface Response {
 //Server Components
 
 // Componente são renderizados pelo lado do servidor, o que me permite fazer requisições direto no corpo do componente
+
+export const revalidate = 60;
+
 const PostsPage = async () => {
-  const response = await fetch("https://dummyjson.com/posts");
+  const response = await fetch("https://dummyjson.com/posts", {
+    cache: "force-cache",
+    next: { revalidate: 60 },
+  });
   const data: Response = await response.json();
 
   const handleFetchPosts = async () => {

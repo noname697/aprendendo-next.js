@@ -19,10 +19,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 60;
+
 const Home = () => {
+  const ramdom = Math.random() * 10;
   return (
     <div>
       <h1>Olá Mundo!</h1>
+      <h2>Número gerado: {ramdom}</h2>
     </div>
   );
 };
