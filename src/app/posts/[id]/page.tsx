@@ -1,17 +1,16 @@
-import { DataProps } from "../page";
+import { Suspense } from "react";
+import { PostInfo } from "./_components/post";
 
 const detailPost = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  const response = await fetch(`https://dummyjson.com/posts/${id}`);
-  const data: DataProps = await response.json();
-
   return (
     <div>
-      <h1>Detalhes do Post: {id}</h1>
-
-      <h2>{data.title}</h2>
-      <h2>{data.body}</h2>
+      <h1 className="text-4xl font-bold text-center">Detalhes do Post: {id}</h1>
+      {/* Renderiza o Suspense enquanto o componente PostInfo está sendo carregado */}
+      <Suspense fallback={<h1>Carregando...</h1>}>
+        <PostInfo id={id} />
+      </Suspense>
     </div>
   );
 };
